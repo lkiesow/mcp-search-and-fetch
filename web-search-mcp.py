@@ -8,6 +8,8 @@ Environment:
   Can be set in .env file or as environment variable.
 - MCP_SERVER_PORT (optional): if set, the server runs on the specified port
   using Streamable HTTP instead of stdio.
+- MCP_SERVER_HOST (optional): if set, the server binds to the specified host
+  (default: 127.0.0.1). Set to 0.0.0.0 to listen on all interfaces.
 """
 
 import os
@@ -64,7 +66,8 @@ def web_fetch(url: str) -> dict:
 
 if __name__ == "__main__":
     port = os.getenv("MCP_SERVER_PORT")
+    host = os.getenv("MCP_SERVER_HOST", "127.0.0.1")
     if port:
-        mcp.run(transport="http", port=int(port))
+        mcp.run(transport="http", host=host, port=int(port))
     else:
         mcp.run()
