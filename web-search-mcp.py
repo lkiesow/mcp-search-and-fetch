@@ -4,7 +4,10 @@
 MCP server exposing Ollama web_search and web_fetch as tools.
 
 Environment:
-- OLLAMA_API_KEY (required): if set, will be used as Authorization header.
+- OLLAMA_API_KEY (optional): if set, will be used as Authorization header.
+  Can be set in .env file or as environment variable.
+- MCP_SERVER_PORT (optional): if set, the server runs on the specified port
+  using Streamable HTTP instead of stdio.
 """
 
 import os
@@ -56,4 +59,8 @@ def web_fetch(url: str) -> dict:
 
 
 if __name__ == "__main__":
-    mcp.run()
+    port = os.getenv("MCP_SERVER_PORT")
+    if port:
+        mcp.run(transport="http", port=int(port))
+    else:
+        mcp.run()
