@@ -9,12 +9,16 @@ Environment:
 
 import os
 
+from dotenv import load_dotenv
 from fastmcp import FastMCP
 from ollama import Client
 
+load_dotenv()
+
+api_key = os.getenv("OLLAMA_API_KEY", "")
+
 client = Client(
-    host="https://ollama.com",
-    headers={"Authorization": "Bearer " + os.getenv("OLLAMA_API_KEY", "")},
+    host="https://ollama.com", headers={"Authorization": "Bearer " + api_key}
 )
 
 mcp = FastMCP("ollama-search-fetch")
