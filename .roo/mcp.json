@@ -1,0 +1,12 @@
+{
+	"mcpServers": {
+		"search-and-fetch": {
+			"command": "python",
+			"args": [
+				"web-search-mcp.py"
+			],
+			"disabled": false,
+			"alwaysAllow": []
+		}
+	}
+}
