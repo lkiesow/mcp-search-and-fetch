@@ -4,7 +4,7 @@
 MCP server exposing Ollama web_search and web_fetch as tools.
 
 Environment:
-- OLLAMA_API_KEY (optional): if set, will be used as Authorization header.
+- OLLAMA_API_KEY (required): the API key for Ollama's hosted search API.
   Can be set in .env file or as environment variable.
 - MCP_SERVER_PORT (optional): if set, the server runs on the specified port
   using Streamable HTTP instead of stdio.
@@ -18,7 +18,11 @@ from ollama import Client
 
 load_dotenv()
 
-api_key = os.getenv("OLLAMA_API_KEY", "")
+api_key = os.getenv("OLLAMA_API_KEY")
+if not api_key:
+    raise ValueError(
+        "OLLAMA_API_KEY environment variable is required."
+    )
 
 client = Client(
     host="https://ollama.com", headers={"Authorization": "Bearer " + api_key}
