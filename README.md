@@ -23,7 +23,7 @@ OLLAMA_API_KEY=your_api_key_here
 mcp-search-and-fetch
 ```
 
-## Clone from Repository
+### Clone from Repository
 
 ```bash
 # Clone the repository
@@ -35,6 +35,74 @@ pip install -r requirements.txt
 
 export OLLAMA_API_KEY=your_api_key_here
 python mcp_search_and_fetch.py
+```
+
+### Docker
+
+To run the pre-built containers:
+
+```bash
+docker run -p 8000:8000 --env-file .env ghcr.io/lkiesow/mcp-search-and-fetch:latest
+```
+
+Or, if you want to build your own containers:
+
+```bash
+docker build -t mcp-search-fetch .
+docker run -p 8000:8000 --env-file .env mcp-search-fetch
+```
+
+### Docker Compose
+
+An example ´docker-compose.yml` with Caddy as reverse proxy:
+
+```yml
+services:
+  search-and-fetch:
+    image: ghcr.io/lkiesow/mcp-search-and-fetch:1.0.1
+    container_name: search-and-fetch
+    restart: always
+    environment:
+      OLLAMA_API_KEY: secret.ollama.api.key
+    networks:
+      - mcp
+
+  caddy:
+    image: docker.io/library/caddy:2.10.2
+    container_name: caddy
+    restart: always
+    environment:
+      CADDY_DOMAIN: search-and-fetch.example.com
+      CADDY_API_KEY: secret.mcp.api.key
+    volumes:
+      - /opt/mcp-search-and-fetch/caddy:/etc/caddy
+      - caddy_data:/data
+      - caddy_config:/config
+    ports:
+      - 80:80
+      - 443:443
+      - 443:443/udp
+    networks:
+      - mcp
+
+volumes:
+  caddy_data:
+  caddy_config:
+
+networks:
+  mcp:
+```
+
+And an example `Caddyfile` in the `caddy` directory like this:
+
+```Caddyfile
+{$CADDY_DOMAIN} {
+	@no_auth {
+		not header Authorization "Bearer {$CADDY_API_KEY}"
+	}
+	respond @no_auth "Unauthorized" 401
+	reverse_proxy /* search-and-fetch:8000
+}
 ```
 
 ## Usage
@@ -53,13 +121,6 @@ export MCP_SERVER_PORT=8000
 export MCP_SERVER_HOST=0.0.0.0
 
 python mcp_search_and_fetch.py
-```
-
-### Docker
-
-```bash
-docker build -t mcp-search-fetch .
-docker run -p 8000:8000 --env-file .env mcp-search-fetch
 ```
 
 ## Configuration
