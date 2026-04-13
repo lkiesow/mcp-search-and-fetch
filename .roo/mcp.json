@@ -7,6 +7,13 @@
 			],
 			"disabled": false,
 			"alwaysAllow": []
+		},
+		"fastmcp": {
+			"type": "streamable-http",
+			"url": "https://gofastmcp.com/mcp",
+			"disabled": false,
+			"alwaysAllow": [],
+			"disabledTools": []
 		}
 	}
 }
