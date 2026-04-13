@@ -14,21 +14,27 @@ An MCP server exposing Ollama's web search and web fetch capabilities as tools.
 ## Installation
 
 ```bash
+pip install mcp-search-and-fetch
+
+# Export your API key
+OLLAMA_API_KEY=your_api_key_here
+
+# Run the MCP server
+mcp-search-and-fetch
+```
+
+## Clone from Repository
+
+```bash
 # Clone the repository
-git clone <repo-url>
+git clone https://github.com/lkiesow/mcp-search-and-fetch.git
 cd mcp-search-and-fetch
 
 # Install dependencies
 pip install -r requirements.txt
 
-# Copy environment sample
-cp .env.sample .env
-```
-
-Edit `.env` with your Ollama API key:
-
-```
-OLLAMA_API_KEY=your_api_key_here
+export OLLAMA_API_KEY=your_api_key_here
+python mcp_search_and_fetch.py
 ```
 
 ## Usage
@@ -36,17 +42,17 @@ OLLAMA_API_KEY=your_api_key_here
 ### Local (stdio)
 
 ```bash
-python web-search-mcp.py
+python mcp_search_and_fetch.py
 ```
 
-### HTTP Server
+### HTTP Server (Streamable HTTP)
 
 ```bash
 # Set port and host in .env
 export MCP_SERVER_PORT=8000
 export MCP_SERVER_HOST=0.0.0.0
 
-python web-search-mcp.py
+python mcp_search_and_fetch.py
 ```
 
 ### Docker
@@ -57,6 +63,9 @@ docker run -p 8000:8000 --env-file .env mcp-search-fetch
 ```
 
 ## Configuration
+
+You can either set environment variables or provide a `.env` file.
+Take a look at the [.env.sample](.env.sample) for an example.
 
 | Environment Variable | Required | Default   | Description
 |----------------------|----------|-----------|------------------------------

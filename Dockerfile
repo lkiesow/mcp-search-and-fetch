@@ -7,7 +7,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
-COPY web-search-mcp.py .
+COPY mcp_search_and_fetch.py .
 
 # Create non-root user for security
 RUN useradd -m -u 1000 searchandfetch && chown -R searchandfetch:searchandfetch /app
@@ -21,4 +21,4 @@ ENV MCP_SERVER_HOST=0.0.0.0
 EXPOSE 8000
 
 # Run the MCP server
-CMD ["python", "web-search-mcp.py"]
+CMD ["python", "mcp_search_and_fetch.py"]

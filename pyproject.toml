@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mcp-search-and-fetch"
+version = "1.0.1"
+description = "An MCP server exposing Ollama's web search and web fetch capabilities as tools"
+readme = {file = "README.md", content-type = "text/markdown"}
+license = {text = "MIT"}
+authors = [
+    {name = "Lars Kiesow", email = "lkiesow@uos.de"}
+]
+keywords = ["mcp", "ollama", "search", "fetch", "ai"]
+classifiers = [
+	 "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+requires-python = ">=3.10"
+dependencies = [
+    "fastmcp",
+    "ollama",
+    "python-dotenv",
+]
+
+[project.urls]
+Homepage = "https://github.com/lkiesow/mcp-search-and-fetch"
+Repository = "https://github.com/lkiesow/mcp-search-and-fetch"
+
+[project.scripts]
+mcp-search-and-fetch = "mcp_search_and_fetch:main"
+
+[tool.setuptools]
+py-modules = ["mcp_search_and_fetch"]
+
+[tool.setuptools.package-data]
+"*" = ["*.md", "*.txt"]

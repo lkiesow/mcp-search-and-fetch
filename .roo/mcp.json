@@ -3,7 +3,7 @@
 		"search-and-fetch": {
 			"command": "python",
 			"args": [
-				"web-search-mcp.py"
+				"mcp_search_and_fetch.py"
 			],
 			"disabled": false,
 			"alwaysAllow": []
